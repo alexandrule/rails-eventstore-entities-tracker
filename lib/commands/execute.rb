@@ -6,10 +6,11 @@ module Commands
     end
 
     private
+
     def handler_for(command)
       {
         Commands::Entities::CreateEntity => CommandHandlers::Entities::CreateEntity.new,
-        Commands::Entities::EditEntity   => CommandHandlers::Entities::EditEntity.new,
+        Commands::Entities::EditEntity => CommandHandlers::Entities::EditEntity.new,
         Commands::Entities::DeleteEntity => CommandHandlers::Entities::DeleteEntity.new,
         Commands::Entities::RestoreEntity => CommandHandlers::Entities::RestoreEntity.new,
       }.fetch(command.class)

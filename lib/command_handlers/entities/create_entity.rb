@@ -2,7 +2,7 @@ module CommandHandlers
   module Entities
     class CreateEntity
       def call(command)
-        stream = "Domain::Entity$#{command.aggregate_uid}"
+        stream_name = "Domain::Entity$#{command.aggregate_uid}"
         entity_data = {
           uid: command.uid,
           name: command.name,
@@ -11,9 +11,12 @@ module CommandHandlers
           extra_data: command.extra_data
         }
 
-        aggregate = Domain::Entity.new(command.aggregate_uid).load(stream)
-        aggregate.create(entity_data)
-        aggregate.store
+        repository = AggregateRoot::Repository.new
+
+        repository.with_aggregate(Domain::Entity.new(command.aggregate_uid), stream_name) do |entity|
+          entity.create(entity_data)
+          repository.store(entity, stream_name)
+        end
       end
     end
   end

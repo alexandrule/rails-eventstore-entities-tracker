@@ -1,5 +1,5 @@
 default: &default
-  adapter: mysql2
+  adapter: postgresql
   database: <%= ENV['DATABASE'] %>
   username: <%= ENV['USERNAME'] %>
   password: <%= ENV['PASSWORD'] %>
